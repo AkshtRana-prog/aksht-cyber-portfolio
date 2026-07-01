@@ -1,31 +1,208 @@
-import { useEffect, useState } from "react";
+import { useCallback } from "react";
+import Particles from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
 
-export default function Particles(){
 
-  const [particles, setParticles] = useState([]);
+export default function CyberParticles(){
 
-  useEffect(() => {
-    setParticles(
-      Array.from({ length: 20 }).map((_, i) => ({
-        id: i,
-        top: `${Math.random() * 100}%`,
-        left: `${Math.random() * 100}%`
-      }))
-    );
-  }, []);
 
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="absolute h-1 w-1 bg-green-400 rounded-full animate-pulse"
-          style={{
-            top: p.top,
-            left: p.left
-          }}
-        />
-      ))}
-    </div>
-  );
+const particlesInit = useCallback(async(engine)=>{
+
+await loadSlim(engine);
+
+},[]);
+
+
+
+return(
+
+
+<Particles
+
+
+init={particlesInit}
+
+
+
+options={{
+
+
+background:{
+
+
+color:{
+
+
+value:"transparent"
+
+
+}
+
+
+},
+
+
+
+
+
+fpsLimit:60,
+
+
+
+
+
+particles:{
+
+
+
+number:{
+
+
+value:70,
+
+
+density:{
+
+
+enable:true,
+
+
+area:800
+
+
+}
+
+
+},
+
+
+
+
+
+
+color:{
+
+
+value:"#00ff66"
+
+
+},
+
+
+
+
+
+
+
+links:{
+
+
+enable:true,
+
+
+distance:150,
+
+
+color:"#00ff66",
+
+
+opacity:0.4,
+
+
+width:1
+
+
+},
+
+
+
+
+
+
+
+move:{
+
+
+enable:true,
+
+
+speed:1,
+
+
+direction:"none",
+
+
+outModes:{
+
+
+default:"bounce"
+
+
+}
+
+
+},
+
+
+
+
+
+
+
+size:{
+
+
+value:{
+
+
+min:1,
+
+
+max:3
+
+
+}
+
+
+},
+
+
+
+
+
+
+
+opacity:{
+
+
+value:0.5
+
+
+}
+
+
+
+
+
+
+},
+
+
+
+
+
+detectRetina:true
+
+
+
+}}
+
+
+/>
+
+
+
+)
+
+
 }
