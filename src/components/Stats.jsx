@@ -22,9 +22,9 @@ desc:"Security writeups"
 },
 
 {
-number:"05",
+number:"06",
 title:"CERTIFICATIONS",
-desc:"CEH | Cisco | Security"
+desc:"CEH | Cisco | Tryhackme"
 }
 
 ]

@@ -61,6 +61,17 @@ issuer:"Deloitte - Forage",
 
 image:"/deloitte.png"
 
+},
+
+
+{
+
+name:"SOC L1",
+
+issuer:"TryHackMe",
+
+image:"/THMSOCL1.png"
+
 }
 
 
