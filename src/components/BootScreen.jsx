@@ -1,995 +1,132 @@
-import {useEffect,useState} from "react";
-
-
-export default function BootScreen({finish}){
-
-
-const [logs,setLogs]=useState([]);
-
-const [alerts,setAlerts]=useState([]);
-
-const [glitch,setGlitch]=useState(false);
-
-
-
-
-const bootLogs=[
-
-
-"INITIALIZING AKSHT_SECURITY CORE",
-
-"LOADING ENCRYPTION MODULE",
-
-"ANALYZING C60 STRUCTURE",
-
-"C60 CYBER CORE DETECTED",
-
-"CONNECTING THREAT ENGINE",
-
-"WAZUH NODE ONLINE",
-
-"SIEM DATABASE CONNECTED",
-
-"ACCESSING AKSHT_RANA_",
-
-"SYSTEM VERIFIED"
-
-
-];
-
-
-
-
-
-const alertWords=[
-
-
-"PACKET_CAPTURED",
-
-"ROOT_TRACE_FOUND",
-
-"FIREWALL_SCAN",
-
-"WAZUH_SYNC",
-
-"SIEM_LINK",
-
-"ENCRYPTED_CHANNEL",
-
-"NODE_CONNECTED",
-
-"THREAT_ANALYSIS"
-
-
-];
-
-
-
-
-
-
-
-
-
-useEffect(()=>{
-
-
-let index=0;
-
-
-
-const bootTimer=setInterval(()=>{
-
-
-setLogs(prev=>[
-
-...prev,
-
-bootLogs[index]
-
-]);
-
-
-
-index++;
-
-
-
-
-if(index >= bootLogs.length){
-
-
-clearInterval(bootTimer);
-
-
-}
-
-
-},350);
-
-
-
-
-
-
-
-const alertTimer=setInterval(()=>{
-
-
-setAlerts(prev=>[
-
-
-...prev.slice(-25),
-
-
-{
-
-
-id:Date.now(),
-
-
-text:
-alertWords[
-Math.floor(
-Math.random()*alertWords.length
-)
-],
-
-
-
-x:
-Math.random()*75+5,
-
-
-
-y:
-Math.random()*65+5
-
-
-}
-
-
-]);
-
-
-
-},150);
-
-
-
-
-
-
-
-
-
-const exitTimer=setTimeout(()=>{
-
-
-clearInterval(alertTimer);
-
-
-
-setGlitch(true);
-
-
-
-setTimeout(()=>{
-
-
-finish();
-
-
-},1800);
-
-
-
-},5200);
-
-
-
-
-
-
-
-return()=>{
-
-
-clearInterval(bootTimer);
-
-clearInterval(alertTimer);
-
-clearTimeout(exitTimer);
-
-
-}
-
-
-
-},[]);
-
-
-
-
-
-
-
-
-
-return(
-
-
-
-<div
-
-
-className="
-
-fixed
-
-inset-0
-
-z-[999]
-
-bg-black
-
-overflow-hidden
-
-font-mono
-
-flex
-
-items-center
-
-justify-center
-
-"
-
->
-
-
-
-
-
-
-
-
-{/* SCAN EFFECT */}
-
-
-
-<div
-
-
-className="
-
-absolute
-
-top-0
-
-left-0
-
-w-full
-
-h-[2px]
-
-bg-green-400
-
-animate-[scan_2s_linear_infinite]
-
-shadow-[0_0_20px_#22c55e]
-
-"
-
-/>
-
-
-
-
-
-
-
-
-
-
-{/* C60 CORE */}
-
-
-
-
-<div
-
-
-className={`
-
-
-absolute
-
-
-left-1/2
-
-
-top-1/2
-
-
--translate-x-1/2
-
-
--translate-y-1/2
-
-
-
-w-[180px]
-
-
-h-[180px]
-
-sm:w-[240px]
-
-
-sm:h-[240px]
-
-
-
-rounded-full
-
-
-
-border
-
-border-green-400
-
-
-
-shadow-[0_0_100px_rgba(0,255,100,.8)]
-
-
-
-transition-all
-
-duration-1000
-
-
-
-${
-
-glitch
-
-?
-
-"scale-[3] opacity-0"
-
-:
-
-"animate-spin"
-
-}
-
-
-
-`}
-
-
-
->
-
-
-
-
-
-
-
-<div
-
-
-className="
-
-
-absolute
-
-inset-5
-
-
-border
-
-border-green-500
-
-
-rounded-full
-
-
-animate-ping
-
-
-
-"
-
-/>
-
-
-
-
-
-
-
-
-
-<div
-
-
-className="
-
-
-absolute
-
-
-inset-12
-
-
-border
-
-
-border-green-300
-
-
-rounded-full
-
-
-
-"
-
-/>
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* FLOATING POPUPS */}
-
-
-
-
-
-{
-
-
-alerts.map((item)=>(
-
-
-
-<div
-
-
-
-key={item.id}
-
-
-
-
-style={{
-
-
-left:`${item.x}%`,
-
-
-top:`${item.y}%`
-
-
-}}
-
-
-
-className="
-
-
-
-absolute
-
-
-
-border
-
-border-green-500
-
-
-
-bg-black/90
-
-
-
-px-3
-
-py-2
-
-
-
-rounded-md
-
-
-
-text-green-400
-
-
-
-text-[10px]
-
-sm:text-xs
-
-
-
-shadow-[0_0_30px_rgba(0,255,100,.5)]
-
-
-
-animate-pulse
-
-
-
-max-w-[150px]
-
-
-
-"
-
-
-
->
-
-
-
-{item.text}
-
-
-
-</div>
-
-
-
-))
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* CENTER TITLE */}
-
-
-
-
-
-<div
-
-
-className="
-
-relative
-
-z-20
-
-text-center
-
-px-5
-
-"
-
-
->
-
-
-
-
-
-
-<h1
-
-
-className="
-
-
-text-3xl
-
-
-sm:text-5xl
-
-
-lg:text-7xl
-
-
-
-font-bold
-
-
-
-tracking-widest
-
-
-
-text-green-400
-
-
-
-"
-
->
-
-
-
-
-</h1>
-
-
-
-
-
-
-
-
-<p
-
-
-className="
-
-
-mt-5
-
-
-
-text-gray-400
-
-
-
-text-xs
-
-
-sm:text-sm
-
-
-
-tracking-widest
-
-
-
-"
-
-
-
->
-
-
-
-
-
-</p>
-
-
-
-
-
-
-<div
-
-
-className="
-
-
-mt-6
-
-
-text-green-500
-
-
-text-sm
-
-
-
-animate-pulse
-
-
-
-"
-
-
->
-
-
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* TERMINAL LOGS */}
-
-
-
-
-
-<div
-
-
-
-className="
-
-
-
-absolute
-
-
-
-bottom-5
-
-
-
-left-5
-
-
-
-right-5
-
-
-
-sm:left-10
-
-
-
-sm:right-auto
-
-
-
-text-green-400
-
-
-
-text-xs
-
-
-
-sm:text-sm
-
-
-
-leading-6
-
-
-
-bg-black/40
-
-
-
-p-3
-
-
-
-rounded-lg
-
-
-
-backdrop-blur-sm
-
-
-
-max-h-[150px]
-
-
-
-overflow-hidden
-
-
-
-"
-
->
-
-
-
-{
-
-
-logs.map((log,i)=>(
-
-
-<div key={i}>
-
-
-&gt; {log}
-
-
-</div>
-
-
-))
-
-
-}
-
-
-
-
-
-<span className="animate-pulse">
-
-_
-
-</span>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* FINAL GLITCH */}
-
-
-
-
-{
-
-
-glitch &&
-
-
-<div
-
-
-className="
-
-
-absolute
-
-
-inset-0
-
-
-
-flex
-
-
-items-center
-
-
-justify-center
-
-
-
-bg-green-500/20
-
-
-
-animate-pulse
-
-
-
-z-30
-
-
-
-"
-
-
->
-
-
-
-<h1
-
-
-className="
-
-
-text-3xl
-
-
-sm:text-5xl
-
-
-
-font-bold
-
-
-
-tracking-widest
-
-
-
-text-green-400
-
-
-
-text-center
-
-
-
-"
-
-
-
->
-
-
-ACCESS GRANTED
-
-
-</h1>
-
-
-
-</div>
-
-
-
-}
-
-
-
-
-
-
-
-</div>
-
-
-
-)
-
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Shield, Lock, Cpu, CheckCircle } from "lucide-react";
+
+export default function BootScreen({ finish }) {
+  const [progress, setProgress] = useState(0);
+  const [logs, setLogs] = useState([]);
+  const [accessGranted, setAccessGranted] = useState(false);
+
+  const bootLogs = [
+    "INITIALIZING AKSHT_SECURITY CORE",
+    "LOADING ENCRYPTION MODULES",
+    "CONNECTING WAZUH SIEM NODE",
+    "VERIFYING ENDPOINT TELEMETRY",
+    "CALIBRATING THREAT DETECTION ENGINE",
+    "SYSTEM INTEGRITY VERIFIED",
+  ];
+
+  useEffect(() => {
+    let currentProgress = 0;
+    let logIndex = 0;
+
+    const progressInterval = setInterval(() => {
+      currentProgress += Math.floor(Math.random() * 12) + 6;
+      if (currentProgress >= 100) {
+        currentProgress = 100;
+        clearInterval(progressInterval);
+
+        setTimeout(() => {
+          setAccessGranted(true);
+          setTimeout(() => {
+            finish();
+          }, 1200);
+        }, 500);
+      }
+      setProgress(currentProgress);
+
+      if (logIndex < bootLogs.length && Math.random() > 0.3) {
+        setLogs((prev) => [...prev, bootLogs[logIndex]]);
+        logIndex++;
+      }
+    }, 180);
+
+    return () => clearInterval(progressInterval);
+  }, [finish]);
+
+  return (
+    <div className="fixed inset-0 z-[9999] bg-[#040706] text-white font-mono flex items-center justify-center p-4 overflow-hidden">
+      {/* Background Subtle Grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.03)1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.03)1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none" />
+
+      {/* Background Glow */}
+      <div className="absolute w-80 h-80 bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
+
+      <AnimatePresence>
+        {!accessGranted ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+            className="w-full max-w-md rounded-2xl bg-[#080d0b]/90 border border-emerald-500/30 p-6 sm:p-8 backdrop-blur-xl shadow-[0_25px_60px_rgba(0,0,0,0.95)] relative flex flex-col items-center text-center"
+          >
+            {/* CENTRAL SECURITY CORE ICON */}
+            <div className="relative mb-6">
+              <div className="w-20 h-20 rounded-2xl bg-emerald-500/10 border border-emerald-500/40 flex items-center justify-center text-emerald-400 relative z-10 shadow-[0_0_30px_rgba(16,185,129,0.3)]">
+                <Shield className="w-10 h-10 text-emerald-400 animate-pulse" />
+              </div>
+              <div className="absolute inset-0 rounded-2xl border border-emerald-400/50 animate-ping opacity-25" />
+            </div>
+
+            {/* TITLE */}
+            <h2 className="text-lg sm:text-xl font-bold text-white font-sans tracking-wide">
+              AKSHT RANA <span className="text-emerald-400">SECURITY OS</span>
+            </h2>
+            <p className="text-xs text-slate-400 mt-1 font-mono">
+              INITIALIZING SOC ENVIRONMENT
+            </p>
+
+            {/* PROGRESS BAR */}
+            <div className="w-full mt-6">
+              <div className="flex items-center justify-between text-xs font-mono text-emerald-400 mb-2">
+                <span>SYSTEM BOOT</span>
+                <span>{progress}%</span>
+              </div>
+              <div className="w-full h-2 rounded-full bg-[#050907] border border-emerald-500/20 overflow-hidden p-0.5">
+                <motion.div
+                  className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
+
+            {/* LOG STREAM */}
+            <div className="w-full mt-6 h-24 p-3 rounded-xl bg-[#030605] border border-emerald-500/15 overflow-hidden text-left text-[11px] text-emerald-400/90 leading-relaxed font-mono">
+              {logs.map((log, i) => (
+                <div key={i} className="flex items-center gap-1.5 truncate">
+                  <span className="text-emerald-400">✓</span>
+                  <span>{log}</span>
+                </div>
+              ))}
+              <span className="animate-pulse text-emerald-400">_</span>
+            </div>
+
+            {/* STATUS FOOTER */}
+            <div className="mt-6 flex items-center gap-2 text-[10px] text-slate-500 uppercase tracking-wider">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+              VERIFYING SOC TELEMETRY NODES
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            className="text-center z-10"
+          >
+            <div className="w-24 h-24 rounded-full bg-emerald-500/20 border-2 border-emerald-400 mx-auto flex items-center justify-center text-emerald-400 shadow-[0_0_50px_rgba(16,185,129,0.5)] mb-6">
+              <CheckCircle className="w-12 h-12 text-emerald-400 animate-bounce" />
+            </div>
+            <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-widest font-sans">
+              ACCESS <span className="text-emerald-400">GRANTED</span>
+            </h1>
+            <p className="text-emerald-400 font-mono text-sm mt-3 tracking-wide">
+              WELCOME TO AKSHT RANA PORTFOLIO
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }

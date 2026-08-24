@@ -12,7 +12,7 @@ description:
 "Rule based phishing detection system analysing malicious URLs.",
 
 
-image:"/1234.png",
+image:"/phishing-detector.png",
 
 
 content:`
