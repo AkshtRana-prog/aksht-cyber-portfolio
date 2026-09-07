@@ -89,7 +89,7 @@ And that opened the door to a much bigger question.
 
 ---
 
-# Why Stop at URLs?
+# Expanding Beyond URL Analysis: Embracing Multi-Modal Threat Detection
 
 While working on the detector, I started thinking about how security investigations actually happen.
 
