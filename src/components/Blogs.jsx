@@ -92,6 +92,75 @@ Create a unique, security-focused portfolio representing my cybersecurity journe
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  const renderFormattedContent = (content) => {
+    if (!content) return null;
+    const lines = content.split("\n");
+
+    const renderInline = (text) => {
+      const parts = text.split(/(\*\*.*?\*\*)/g);
+      return parts.map((part, i) => {
+        if (part.startsWith("**") && part.endsWith("**")) {
+          return (
+            <strong key={i} className="font-bold text-white">
+              {part.slice(2, -2)}
+            </strong>
+          );
+        }
+        return part;
+      });
+    };
+
+    return lines.map((line, idx) => {
+      const trimmed = line.trim();
+
+      if (!trimmed) {
+        return <div key={idx} className="h-2" />;
+      }
+
+      if (trimmed === "---") {
+        return <hr key={idx} className="my-5 border-emerald-500/20" />;
+      }
+
+      if (trimmed.startsWith("# ")) {
+        return (
+          <h2 key={idx} className="text-xl sm:text-2xl font-bold text-emerald-400 font-sans mt-6 mb-3 tracking-tight">
+            {renderInline(trimmed.replace(/^#\s+/, ""))}
+          </h2>
+        );
+      }
+
+      if (trimmed.startsWith("## ")) {
+        return (
+          <h3 key={idx} className="text-lg sm:text-xl font-bold text-emerald-300 font-sans mt-5 mb-2 tracking-tight">
+            {renderInline(trimmed.replace(/^##\s+/, ""))}
+          </h3>
+        );
+      }
+
+      if (trimmed.startsWith("### ")) {
+        return (
+          <h4 key={idx} className="text-base sm:text-lg font-bold text-emerald-400 font-sans mt-4 mb-2 tracking-tight">
+            {renderInline(trimmed.replace(/^###\s+/, ""))}
+          </h4>
+        );
+      }
+
+      if (trimmed.startsWith("> ")) {
+        return (
+          <blockquote key={idx} className="my-3 pl-4 border-l-2 border-emerald-400 bg-emerald-500/5 py-2 pr-3 rounded-r-lg text-emerald-200 font-mono text-xs sm:text-sm italic">
+            {renderInline(trimmed.replace(/^>\s+/, ""))}
+          </blockquote>
+        );
+      }
+
+      return (
+        <p key={idx} className="my-1.5 text-slate-300 leading-relaxed text-sm sm:text-base font-sans">
+          {renderInline(line)}
+        </p>
+      );
+    });
+  };
+
   return (
     <section id="blogs" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-24 relative">
       {/* Background Glow */}
@@ -160,8 +229,8 @@ Create a unique, security-focused portfolio representing my cybersecurity journe
               </h2>
 
               {/* CONTENT BODY */}
-              <div className="mt-6 pt-6 border-t border-emerald-500/15 text-slate-300 text-sm leading-relaxed whitespace-pre-line font-sans bg-[#040706] p-5 rounded-xl border border-emerald-500/15">
-                {selected.content}
+              <div className="mt-6 pt-6 border-t border-emerald-500/15 text-slate-300 text-sm leading-relaxed font-sans bg-[#040706] p-5 rounded-xl border border-emerald-500/15">
+                {renderFormattedContent(selected.content)}
               </div>
 
               {/* MODAL FOOTER */}

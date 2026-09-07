@@ -125,13 +125,13 @@ Over time, the project grew beyond URL analysis.
 
 It gained support for different forms of analysis, including:
 
-### 🌐 URL Analysis
+### URL Analysis
 
 The original foundation of the project.
 
 The system examines URLs for indicators associated with potentially malicious or phishing behaviour.
 
-### 📧 Email & .eml Analysis
+### Email & .eml Analysis
 
 Phishing doesn't always arrive as a suspicious link pasted into a browser.
 
@@ -139,25 +139,25 @@ It often arrives inside an email.
 
 Adding email and .eml analysis allowed the project to move closer to a realistic investigation workflow.
 
-### 📊 Log Analysis
+### Log Analysis
 
 Logs can contain important clues about what happened on a system.
 
 Being able to feed log data into the platform expanded the project beyond simple phishing detection and toward security investigation.
 
-### 📡 PCAP Analysis
+### PCAP Analysis
 
 Network traffic provides another layer of evidence.
 
 PCAP analysis brought network-level investigation into the same environment.
 
-### 🎙️ Audio Deepfake Detection
+### Audio Deepfake Detection
 
 Then came synthetic media.
 
 The project expanded into audio deepfake detection using machine-learning techniques alongside fallback analysis methods.
 
-### 🎥 Video Deepfake Detection
+### Video Deepfake Detection
 
 The same broader idea extended into video.
 
