@@ -133,6 +133,11 @@ export default function Projects() {
                   <img
                     src={selected.image}
                     alt={selected.title}
+                    onError={(e) => {
+                      if (!e.target.src.endsWith('.png.png')) {
+                        e.target.src = '/phishing-detector.png.png';
+                      }
+                    }}
                     className="w-full h-full object-cover"
                   />
                 </div>
